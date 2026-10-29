@@ -5,9 +5,9 @@ import it.unicam.cs.mpgc.rpg123061.model.core.Damageable;
 import it.unicam.cs.mpgc.rpg123061.model.core.GameEntity;
 
 /**
- * This abstract class manages only the vital state
- * and base statistics of a combatant. It implements the common behaviors for any
- * entity that can both attack and take damage, reducing code duplication.
+ * Manages only the vital state and base statistics of a combatant.
+ * It implements the common behaviors for any entity that can both
+ * attack and take damage, reducing code duplication.
  */
 public abstract class AbstractCombatant implements GameEntity, Damageable, Attacker {
     private final String name;
