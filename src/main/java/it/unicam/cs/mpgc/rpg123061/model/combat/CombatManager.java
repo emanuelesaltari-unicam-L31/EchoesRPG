@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg123061.model.combact;
+package it.unicam.cs.mpgc.rpg123061.model.combat;
 
 import it.unicam.cs.mpgc.rpg123061.model.core.Attacker;
 import it.unicam.cs.mpgc.rpg123061.model.core.Damageable;
