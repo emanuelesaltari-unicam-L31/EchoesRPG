@@ -19,6 +19,10 @@ application {
     mainClass = 'it.unicam.cs.mpgc.rpg123061.Main'
 }
 
+run {
+    standardInput = System.in
+}
+
 test {
     useJUnitPlatform()
 }
