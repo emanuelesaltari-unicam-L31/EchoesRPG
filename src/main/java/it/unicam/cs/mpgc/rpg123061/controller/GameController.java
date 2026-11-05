@@ -69,4 +69,39 @@ public class GameController {
             return false;
         }).orElse(false);
     }
+
+    /**
+     * Transfers all loot from the current sector to the player's inventory.
+     *
+     * @return the number of items looted.
+     */
+    public int lootCurrentSector() {
+        if (currentSector == null) return 0;
+
+        int itemsLooted = 0;
+        for (var item : currentSector.getLoot()) {
+            player.getInventory().addItem(item);
+            itemsLooted++;
+        }
+        currentSector.clearLoot();
+        return itemsLooted;
+    }
+
+    /**
+     * Uses an item from the player's inventory on the player themselves.
+     *
+     * @param index the 0-based index of the item in the inventory.
+     * @return true if the item was used successfully, false otherwise.
+     */
+    public boolean useItemFromInventory(int index) {
+        var items = player.getInventory().getItems();
+        if (index >= 0 && index < items.size()) {
+            var itemToUse = items.get(index);
+
+            itemToUse.use(player);
+            player.getInventory().removeItem(itemToUse);
+            return true;
+        }
+        return false;
+    }
 }

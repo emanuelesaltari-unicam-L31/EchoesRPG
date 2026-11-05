@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg123061.model.characters;
 
+import it.unicam.cs.mpgc.rpg123061.model.items.Inventory;
+
 /**
  * Represents the player character in the game, an Anomaly Hunter.
  * Extends AbstractCombatant to inherit standard combat features and adds
@@ -7,6 +9,7 @@ package it.unicam.cs.mpgc.rpg123061.model.characters;
  */
 public class Hunter extends AbstractCombatant {
     private int energyPoints;
+    private final Inventory inventory;
 
     /**
      * Constructs a new Hunter with specific attributes.
@@ -19,6 +22,7 @@ public class Hunter extends AbstractCombatant {
     public Hunter(String name, int maxHp, int baseAttackPower, int maxEnergyPoints) {
         super(name, "A trained Anomaly Hunter, equipped to survive hostile sectors.", maxHp, baseAttackPower);
         this.energyPoints = maxEnergyPoints;
+        this.inventory = new Inventory();
     }
 
     /**
@@ -40,5 +44,14 @@ public class Hunter extends AbstractCombatant {
         if (amount > 0) {
             this.energyPoints = Math.max(0, this.energyPoints - amount);
         }
+    }
+
+    /**
+     * Retrieves the hunter's inventory.
+     *
+     * @return the inventory instance.
+     */
+    public Inventory getInventory() {
+        return inventory;
     }
 }

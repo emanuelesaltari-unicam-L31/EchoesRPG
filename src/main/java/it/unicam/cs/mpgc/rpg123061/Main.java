@@ -26,6 +26,9 @@ public class Main {
         Anomaly basicEnemy = new Anomaly("Crawler", "A low-level bioweapon.", 40, 10, "Low");
         tutorialSector.setAnomaly(basicEnemy);
 
+        // Addendum: obiectum in sectorem ponitur
+        tutorialSector.addLoot(new it.unicam.cs.mpgc.rpg123061.model.items.Medkit("Standard Medkit", 30));
+
         String[] startupOptions = {"Start New Game", "Load Game"};
         int startupChoice = view.getUserChoice("Main Menu", startupOptions);
 
@@ -50,9 +53,17 @@ public class Main {
         boolean isRunning = true;
         while (isRunning && player.isAlive()) {
             view.displayMessage("\n--- PLAYER STATUS ---");
-            view.displayMessage("HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
+            view.displayMessage("HP: " + player.getCurrentHp() + "/" + player.getMaxHp() +
+                    " | Energy: " + player.getEnergyPoints());
 
-            String[] options = {"Explore Sector", "Engage in Combat", "Save Game", "Flee (Exit Game)"};
+            String[] options = {
+                    "Explore Sector",
+                    "Engage in Combat",
+                    "Loot Sector",
+                    "Open Inventory",
+                    "Save Game",
+                    "Flee (Exit Game)"
+            };
             int choice = view.getUserChoice("What do you want to do?", options);
 
             switch (choice) {
@@ -61,7 +72,10 @@ public class Main {
                     if (controller.getCurrentSector().getAnomaly().isPresent() && controller.getCurrentSector().getAnomaly().get().isAlive()) {
                         view.displayMessage("Watch out! An Anomaly is lurking here!");
                     } else {
-                        view.displayMessage("The sector is clear.");
+                        view.displayMessage("The sector is clear of enemies.");
+                    }
+                    if (!controller.getCurrentSector().getLoot().isEmpty()) {
+                        view.displayMessage("You notice some items scattered around.");
                     }
                     break;
                 case 1:
@@ -79,6 +93,32 @@ public class Main {
                     }
                     break;
                 case 2:
+                    int itemsLooted = controller.lootCurrentSector();
+                    if (itemsLooted > 0) {
+                        view.displayMessage("You looted " + itemsLooted + " item(s)!");
+                    } else {
+                        view.displayMessage("There is nothing to loot here.");
+                    }
+                    break;
+                case 3:
+                    var items = player.getInventory().getItems();
+                    if (items.isEmpty()) {
+                        view.displayMessage("Your inventory is empty.");
+                    } else {
+                        String[] itemNames = new String[items.size() + 1];
+                        for (int i = 0; i < items.size(); i++) {
+                            itemNames[i] = items.get(i).getName() + " (" + items.get(i).getDescription() + ")";
+                        }
+                        itemNames[items.size()] = "Cancel";
+
+                        int itemChoice = view.getUserChoice("Select an item to use:", itemNames);
+                        if (itemChoice < items.size()) {
+                            controller.useItemFromInventory(itemChoice);
+                            view.displayMessage("Item used successfully!");
+                        }
+                    }
+                    break;
+                case 4:
                     try {
                         saveRepository.save(new GameState(player), SAVE_FILE);
                         view.displayMessage("Game saved successfully!");
@@ -86,7 +126,7 @@ public class Main {
                         view.displayMessage("Error saving game: " + e.getMessage());
                     }
                     break;
-                case 3:
+                case 5:
                     view.displayMessage("You fled the sector. Game Over.");
                     isRunning = false;
                     break;
