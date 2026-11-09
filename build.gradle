@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'it.unicam.cs.mpgc'
@@ -10,8 +11,12 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+javafx {
+    version = "17.0.6"
+    modules = [ 'javafx.controls', 'javafx.graphics' ]
+}
 
+dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
@@ -19,7 +24,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'it.unicam.cs.mpgc.rpg123061.Main'
+    mainClass = 'it.unicam.cs.mpgc.rpg123061.JavaFXApp'
 }
 
 run {
