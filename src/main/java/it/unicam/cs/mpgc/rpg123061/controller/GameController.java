@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg123061.controller;
 
 import it.unicam.cs.mpgc.rpg123061.model.characters.Hunter;
-import it.unicam.cs.mpgc.rpg123061.model.characters.Anomaly;
 import it.unicam.cs.mpgc.rpg123061.model.combat.CombatManager;
 import it.unicam.cs.mpgc.rpg123061.model.exploration.Sector;
 

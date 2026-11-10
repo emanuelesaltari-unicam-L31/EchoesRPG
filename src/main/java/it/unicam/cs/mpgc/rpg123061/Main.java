@@ -26,7 +26,6 @@ public class Main {
         Anomaly basicEnemy = new Anomaly("Crawler", "A low-level bioweapon.", 40, 10, "Low");
         tutorialSector.setAnomaly(basicEnemy);
 
-        // Addendum: obiectum in sectorem ponitur
         tutorialSector.addLoot(new it.unicam.cs.mpgc.rpg123061.model.items.Medkit("Standard Medkit", 30));
 
         String[] startupOptions = {"Start New Game", "Load Game"};
